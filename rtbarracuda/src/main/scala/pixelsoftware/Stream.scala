@@ -2,8 +2,11 @@
 package pixelsoftware
 
 import org.apache.spark.SparkConf
-import org.apache.spark.streaming.{ Seconds, StreamingContext }
+import org.apache.spark.streaming.{ Seconds, StreamingContext, Time }
 import org.apache.spark.storage.StorageLevel
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.rdd.RDD
+import org.apache.spark.SparkContext
 
 import java.util.regex.Pattern
 import java.util.regex.Matcher
@@ -18,7 +21,10 @@ object Stream {
   def main(args: Array[String]) {
 
     // Create the context with a 1 second batch size
-    val ssc = new StreamingContext("local[*]", "BarracudaStream", Seconds(1))
+    //val ssc = new StreamingContext("local[*]", "BarracudaStream", Seconds(1))
+
+    val conf = new SparkConf().setAppName("BarracudaStream").setMaster("local[*]").set("spark.sql.warehouse.dir", "/tmp")
+    val ssc = new StreamingContext(conf, Seconds(1))
 
     setupLogging()
 
@@ -27,7 +33,7 @@ object Stream {
     val pattern = barracudaLogPattern()
 
     // The only difference from the push example is that we use createPollingStream instead of createStream.
-    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxx.xxx.nl", 9988)
+    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxx.xx.nl", 9988)
 
     // This creates a DStream of SparkFlumeEvent objects. We need to extract the actual messages.
     // This assumes they are just strings, like lines in a log file.
