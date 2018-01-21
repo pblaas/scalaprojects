@@ -29,7 +29,6 @@ object Stream {
     setupLogging()
 
     // Construct a regular expression (regex) to extract fields from raw Apache log lines
-    //val pattern = apacheLogPattern()
     val pattern = barracudaLogPattern()
 
     // The only difference from the push example is that we use createPollingStream instead of createStream.
@@ -41,8 +40,6 @@ object Stream {
     // could handle structured data if you want.
     val lines = flumeStream.map(x => new String(x.event.getBody().array()))
     // Extract the request field from each log line
-    //val requests = lines.map(x => { val matcher: Matcher = pattern.matcher(x); if (matcher.matches()) matcher.group(17) else "[Not match found]" })
-    //  s"$month $day $time $device  $chain\\: $fqdn$clientip $messageid $bytesin $bytesout $action $sender $receiver $filteraction $filterreason $ip"
 
     val requests = lines.map(x => {
       val matcher: Matcher = pattern.matcher(x)
@@ -93,30 +90,16 @@ object Stream {
       //val wordCountsDataFrame =
       //  sqlContext.sql("select month, count(*) as total from requests group by month")
       val wordCountsDataFrame =
-        sqlContext.sql("select * from requests")
+        sqlContext.sql("select sender, receiver, ip from requests")
 
-      println(s"========= $time =========")
-      wordCountsDataFrame.show()
+      //println(s"========= $time =========")
+      //wordCountsDataFrame.show()
 
       // If you want to dump data into an external database instead, check out the
       // org.apache.spark.sql.DataFrameWriter class! It can write dataframes via
       // jdbc and many other formats! You can use the "append" save mode to keep
       // adding data from each batch.
     })
-
-    /*
-    // Extract the URL from the request
-    //val urls = requests.map(x => { val arr = x.toString().split(" "); if (arr.size == 3) arr(1) else "[error]" })
-    //val urls = requests.map(x => { val arr = x.toString().split(" "); arr(0) })
-    val urls = requests.map(x => x.toString())
-
-    // Reduce by URL over a 5-minute window sliding every second
-    val urlCounts = urls.map(x => (x, 1)).reduceByKeyAndWindow(_ + _, _ - _, Seconds(300), Seconds(1))
-
-    // Sort and print the results
-    val sortedResults = urlCounts.transform(rdd => rdd.sortBy(x => x._2, false))
-    sortedResults.print()
-    */
 
     // Kick it off
     ssc.checkpoint("/tmp")
@@ -125,7 +108,6 @@ object Stream {
   }
 }
 
-//  s"$month $day $time $device  $chain\\: $fqdn$clientip $messageid $bytesin $bytesout $action $sender $receiver $filteraction $filterreason $ip"
 /** Case class for converting RDD to DataFrame */
 case class Record(month: String, day: Int, time: String, device: String, chain: String, fqdn: String, clientip: String, messageid: String, bytesin: Int, bytesout: Int, action: String, sender: String, receiver: String, filteraction: Int, filterreason: Int, ip: String)
 
