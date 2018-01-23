@@ -20,7 +20,8 @@ lazy val root = (project in file(".")).settings(
     "org.apache.spark" %% "spark-streaming-flume" % "2.2.1",
     "org.apache.spark" %% "spark-sql" % "2.2.1" % "provided",
     "org.apache.flume" % "flume-ng-sdk" % "1.8.0",
-    "org.apache.flume" % "flume-ng-core" % "1.8.0"
+    "org.apache.flume" % "flume-ng-core" % "1.8.0",
+    "org.postgresql" % "postgresql" % "42.2.0",
+    "org.elasticsearch" %% "elasticsearch-spark-20" % "6.1.2"
   )
 )
-

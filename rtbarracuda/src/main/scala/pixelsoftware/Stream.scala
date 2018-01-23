@@ -7,6 +7,12 @@ import org.apache.spark.storage.StorageLevel
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.rdd.RDD
 import org.apache.spark.SparkContext
+import org.apache.spark.sql.DataFrameWriter
+
+import org.elasticsearch.spark._
+import org.elasticsearch.spark.streaming
+import org.elasticsearch.spark.streaming.EsSparkStreaming
+import org.elasticsearch.spark.rdd.EsSpark
 
 import java.util.regex.Pattern
 import java.util.regex.Matcher
@@ -23,8 +29,12 @@ object Stream {
     // Create the context with a 1 second batch size
     //val ssc = new StreamingContext("local[*]", "BarracudaStream", Seconds(1))
 
-    val conf = new SparkConf().setAppName("BarracudaStream").setMaster("local[*]").set("spark.sql.warehouse.dir", "/tmp")
-    val ssc = new StreamingContext(conf, Seconds(1))
+    //val conf = new SparkConf().setAppName("BarracudaStream").setMaster("local[*]").set("spark.sql.warehouse.dir", "/tmp")
+    val conf = new SparkConf().setAppName("BarracudaStream").setMaster("local[*]").set("spark.sql.warehouse.dir", "/tmp").set("spark.cores.max", "1")
+    conf.set("es.index.auto.create", "true")
+    conf.set("es.nodes", "127.0.0.1:9200")
+    conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+    val ssc = new StreamingContext(conf, Seconds(5))
 
     setupLogging()
 
@@ -32,7 +42,7 @@ object Stream {
     val pattern = barracudaLogPattern()
 
     // The only difference from the push example is that we use createPollingStream instead of createStream.
-    val flumeStream = FlumeUtils.createPollingStream(ssc, "localhost", 9988)
+    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxxx.xxx.nl", 9988)
 
     // This creates a DStream of SparkFlumeEvent objects. We need to extract the actual messages.
     // This assumes they are just strings, like lines in a log file.
@@ -62,9 +72,9 @@ object Stream {
         val ip = matcher.group(17)
         (month, day, time, device, chain, fqdn, clientip, messageid, bytesin, bytesout, action, sender, receiver, filteraction, filterreason, ip)
       } else {
-        ("error", 0, "error", "error", "error", "error", "error", "error", 0, 0, "error", "error", "error", 0, 0, "error")
+        (null, 0, null, null, null, null, null, null, 0, 0, null, null, null, 0, 0, null)
       }
-    }).window(Seconds(10))
+    }).window(Seconds(300))
 
     // Process each RDD from each batch as it comes in
     requests.foreachRDD((rdd, time) => {
@@ -80,20 +90,28 @@ object Stream {
       // So we'll convert each RDD of tuple data into an RDD of "Record"
       // objects, which in turn we can convert to a DataFrame using toDF()
       val requestsDataFrame = rdd.map(w => Record(w._1, w._2, w._3, w._4, w._5, w._6, w._7, w._8, w._9, w._10, w._11, w._12, w._13, w._14, w._15, w._16)).toDF()
-
+      val cleandf = requestsDataFrame.na.drop()
       // Create a SQL table from this DataFrame
-      requestsDataFrame.createOrReplaceTempView("requests")
+      cleandf.createOrReplaceTempView("requests")
+      //requestsDataFrame.registerTempTable("tempTable")
+      //requestsDataFrame.write.saveAsTable("pandas")
+      //sqlContext.sql("DROP VIEW global_temp.rq")
+      //requestsDataFrame.createGlobalTempView("rq")
 
       // Count up occurrences of each user agent in this RDD and print the results.
       // The powerful thing is that you can do any SQL you want here!
       // But remember it's only querying the data in this RDD, from this batch.
-      //val wordCountsDataFrame =
-      //  sqlContext.sql("select month, count(*) as total from requests group by month")
       val wordCountsDataFrame =
-        sqlContext.sql("select sender, receiver, ip from requests")
+        sqlContext.sql("select device, clientip, sender, receiver from requests")
 
-      //println(s"========= $time =========")
-      //wordCountsDataFrame.show()
+      println(s"========= $time =========")
+      val sortedDF = wordCountsDataFrame.groupBy("clientip").count().sort($"count".desc)
+      //val sortedDF = wordCountsDataFrame.groupBy("clientip")
+      sortedDF.show(15)
+
+      //wordCountsDataFrame.printSchema()
+      wordCountsDataFrame.groupBy("sender").count().sort($"count".desc).show(5, false)
+      wordCountsDataFrame.groupBy("receiver").count().sort($"count".desc).show(5, false)
 
       // If you want to dump data into an external database instead, check out the
       // org.apache.spark.sql.DataFrameWriter class! It can write dataframes via
@@ -110,6 +128,7 @@ object Stream {
 
 /** Case class for converting RDD to DataFrame */
 case class Record(month: String, day: Int, time: String, device: String, chain: String, fqdn: String, clientip: String, messageid: String, bytesin: Int, bytesout: Int, action: String, sender: String, receiver: String, filteraction: Int, filterreason: Int, ip: String)
+case class Trip(departure: String, arrival: String)
 
 /**
  * Lazily instantiated singleton instance of SQLContext
