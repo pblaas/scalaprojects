@@ -1,0 +1,41 @@
+
+PUT _ingest/pipeline/geoip
+{
+  "description": "Add geoip info",
+  "processors": [
+    {
+      "geoip": {
+        "field": "clientip"
+      }
+    }
+  ]
+}
+
+PUT spark
+{
+  "mappings": {
+    "docs": {
+    "properties": {
+      "clientip": {
+        "type": "ip"
+      },
+      "count": {
+        "type": "integer"
+      },
+    "geoip"  : {
+      "dynamic": true,
+      "properties" : {
+        "ip": { "type": "ip" },
+        "location" : { "type" : "geo_point" },
+        "latitude" : { "type" : "half_float" },
+        "longitude" : { "type" : "half_float" }
+      }
+    },
+      "created": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      }
+    }
+    }
+  }
+}
