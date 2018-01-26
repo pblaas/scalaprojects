@@ -47,10 +47,13 @@ object Writetest {
     // a QueueInputDStream
     val rddQueue = new Queue[RDD[Trip]]()
 
-    case class Trip(date: String, departure: String, arrival: String)
+    case class Trip(date: String, ipaddress: String, count: Int)
     val timestamp = DateTime.now(DateTimeZone.UTC)
-    val upcomingTrip = Trip(timestamp.toString(), "OTP", "SFO")
-    val lastWeekTrip = Trip(timestamp.toString(), "MUC", "OTP")
+
+    val capital = Map("US" -> "Washington", "France" -> "Paris", "Japan" -> "Tokyo")
+
+    val upcomingTrip = Trip(timestamp.toString(), "192.168.10.200", 1)
+    val lastWeekTrip = Trip(timestamp.toString(), "192.168.20.101", 10)
     // Create the QueueInputDStream and use it do some processing
     val inputStream = ssc.queueStream(rddQueue)
     inputStream.print()
