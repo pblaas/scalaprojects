@@ -1,0 +1,260 @@
+[
+  {
+    "_id": "ff8468b0-0235-11e8-93d7-f98439c2c3d7",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Barracuda - RTD",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":5,\"i\":\"1\"},\"id\":\"ea8fe060-0235-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":2,\"y\":5,\"w\":4,\"h\":4,\"i\":\"2\"},\"id\":\"9f9873c0-0239-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":7,\"w\":2,\"h\":2,\"i\":\"3\"},\"id\":\"78958890-0238-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":0,\"y\":5,\"w\":2,\"h\":2,\"i\":\"4\"},\"id\":\"a0c613c0-0238-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":6,\"y\":5,\"w\":6,\"h\":4,\"i\":\"5\"},\"id\":\"f825bf60-0276-11e8-8c98-79925d068d70\",\"type\":\"visualization\",\"version\":\"6.1.2\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "uiStateJSON": "{\"P-1\":{\"mapCenter\":[45.1510532655634,14.589843750000002],\"mapZoom\":2},\"P-2\":{\"vis\":{\"legendOpen\":true}}}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-15m",
+      "refreshInterval": {
+        "display": "5 seconds",
+        "pause": false,
+        "section": 1,
+        "value": 5000
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "1f161de0-0281-11e8-8c98-79925d068d70",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Barracuda - RTD - 2",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"2\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":4,\"i\":\"2\"},\"id\":\"9f9873c0-0239-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":6,\"w\":2,\"h\":2,\"i\":\"3\"},\"id\":\"78958890-0238-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":0,\"y\":4,\"w\":2,\"h\":2,\"i\":\"4\"},\"id\":\"a0c613c0-0238-11e8-93d7-f98439c2c3d7\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":6,\"y\":4,\"w\":6,\"h\":4,\"i\":\"5\"},\"id\":\"f825bf60-0276-11e8-8c98-79925d068d70\",\"type\":\"visualization\",\"version\":\"6.1.2\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":2,\"y\":4,\"w\":4,\"h\":4,\"i\":\"6\"},\"version\":\"6.1.2\",\"type\":\"visualization\",\"id\":\"dc43f230-0280-11e8-8c98-79925d068d70\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "uiStateJSON": "{\"P-1\":{\"mapCenter\":[45.1510532655634,14.589843750000002],\"mapZoom\":2},\"P-2\":{\"vis\":{\"legendOpen\":true}},\"P-6\":{\"vis\":{\"defaultColors\":{\"0 - 25\":\"rgb(0,104,55)\",\"25 - 50\":\"rgb(183,224,117)\",\"50 - 75\":\"rgb(253,191,111)\",\"75 - 100\":\"rgb(165,0,38)\"}}}}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-15m",
+      "refreshInterval": {
+        "display": "5 seconds",
+        "pause": false,
+        "section": 1,
+        "value": 5000
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "023063f0-0238-11e8-93d7-f98439c2c3d7",
+    "_type": "search",
+    "_source": {
+      "title": "count+city_name",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "count",
+        "geoip.city_name"
+      ],
+      "sort": [
+        "created",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"c051f900-0235-11e8-93d7-f98439c2c3d7\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "412afac0-0238-11e8-93d7-f98439c2c3d7",
+    "_type": "search",
+    "_source": {
+      "title": "all-ips+count",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "count",
+        "clientip"
+      ],
+      "sort": [
+        "created",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"c051f900-0235-11e8-93d7-f98439c2c3d7\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "4c82e130-0238-11e8-93d7-f98439c2c3d7",
+    "_type": "search",
+    "_source": {
+      "title": "all-ips",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "clientip"
+      ],
+      "sort": [
+        "created",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"c051f900-0235-11e8-93d7-f98439c2c3d7\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "4933ad00-0276-11e8-8c98-79925d068d70",
+    "_type": "search",
+    "_source": {
+      "title": "count+continent",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "geoip.continent_name",
+        "count"
+      ],
+      "sort": [
+        "created",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"c051f900-0235-11e8-93d7-f98439c2c3d7\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "dc43f230-0280-11e8-8c98-79925d068d70",
+    "_type": "visualization",
+    "_source": {
+      "title": "SeriousSpamCounter",
+      "visState": "{\"title\":\"SeriousSpamCounter\",\"type\":\"goal\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"isDisplayWarning\":false,\"type\":\"gauge\",\"gauge\":{\"verticalSplit\":false,\"autoExtend\":false,\"percentageMode\":true,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":2500},{\"from\":2500,\"to\":5000},{\"from\":5000,\"to\":7500},{\"from\":7500,\"to\":10000}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":true,\"labels\":false,\"color\":\"#333\",\"width\":2},\"type\":\"meter\",\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"SSP ( Serious Spam Counter)\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"count\",\"customLabel\":\"Blocked mails\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 25\":\"rgb(0,104,55)\",\"25 - 50\":\"rgb(183,224,117)\",\"50 - 75\":\"rgb(253,191,111)\",\"75 - 100\":\"rgb(165,0,38)\"}}}",
+      "description": "",
+      "savedSearchId": "412afac0-0238-11e8-93d7-f98439c2c3d7",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "9f9873c0-0239-11e8-93d7-f98439c2c3d7",
+    "_type": "visualization",
+    "_source": {
+      "title": "blocked-mail-per-ip",
+      "visState": "{\"title\":\"blocked-mail-per-ip\",\"type\":\"histogram\",\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"# Bocked mails\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"# Bocked mails\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"count\",\"customLabel\":\"# Bocked mails\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"clientip\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "412afac0-0238-11e8-93d7-f98439c2c3d7",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "78958890-0238-11e8-93d7-f98439c2c3d7",
+    "_type": "visualization",
+    "_source": {
+      "title": "Unique-Ip-count",
+      "visState": "{\"title\":\"Unique-Ip-count\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":40}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"clientip\",\"customLabel\":\"Unique IP's\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "4c82e130-0238-11e8-93d7-f98439c2c3d7",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "a0c613c0-0238-11e8-93d7-f98439c2c3d7",
+    "_type": "visualization",
+    "_source": {
+      "title": "blocked-mail-count",
+      "visState": "{\"title\":\"blocked-mail-count\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":40}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"count\",\"customLabel\":\"Blocked mails\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "412afac0-0238-11e8-93d7-f98439c2c3d7",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "f825bf60-0276-11e8-8c98-79925d068d70",
+    "_type": "visualization",
+    "_source": {
+      "title": "blocked-mail-per-continent",
+      "visState": "{\"title\":\"blocked-mail-per-continent\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":true,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"count\",\"customLabel\":\"# blocked mails\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"geoip.continent_name.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "4933ad00-0276-11e8-8c98-79925d068d70",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "ea8fe060-0235-11e8-93d7-f98439c2c3d7",
+    "_type": "visualization",
+    "_source": {
+      "title": "HEAT-Map",
+      "visState": "{\"title\":\"HEAT-Map\",\"type\":\"tile_map\",\"params\":{\"mapType\":\"Scaled Circle Markers\",\"isDesaturated\":true,\"addTooltip\":true,\"heatClusterSize\":3,\"legendPosition\":\"bottomright\",\"mapZoom\":2,\"mapCenter\":[0,0],\"wms\":{\"enabled\":false,\"options\":{\"format\":\"image/png\",\"transparent\":true}}},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"count\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"geohash_grid\",\"schema\":\"segment\",\"params\":{\"field\":\"geoip.location\",\"autoPrecision\":true,\"isFilteredByCollar\":true,\"useGeocentroid\":true,\"precision\":3}}]}",
+      "uiStateJSON": "{\"mapZoom\":2,\"mapCenter\":[8.233237111274565,22.67578125]}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"c051f900-0235-11e8-93d7-f98439c2c3d7\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  }
+]

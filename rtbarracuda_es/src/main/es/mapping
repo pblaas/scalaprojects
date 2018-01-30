@@ -11,6 +11,41 @@ PUT _ingest/pipeline/geoip
   ]
 }
 
+PUT _template/sparktemplate_1
+{
+  "index_patterns": ["spark*"],
+  "settings": {
+    "number_of_shards": 1
+  },
+    "mappings": {
+    "docs": {
+    "properties": {
+      "clientip": {
+        "type": "ip"
+      },
+      "count": {
+        "type": "integer"
+      },
+    "geoip"  : {
+      "dynamic": true,
+      "properties" : {
+        "ip": { "type": "ip" },
+        "location" : { "type" : "geo_point" },
+        "latitude" : { "type" : "half_float" },
+        "longitude" : { "type" : "half_float" }
+      }
+    },
+      "created": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      }
+    }
+    }
+  }
+}
+
+
+## individual mapping for spark index.
 PUT spark
 {
   "mappings": {
@@ -38,4 +73,20 @@ PUT spark
     }
     }
   }
+}
+
+
+##Optional
+PUT _ingest/pipeline/geoip
+{
+  "description" : "Add geoip info",
+  "processors" : [
+    {
+      "geoip" : {
+        "field" : "clientip",
+        "target_field" : "geo",
+        "database_file" : "GeoLite2-Country.mmdb.gz"
+      }
+    }
+  ]
 }
