@@ -11,11 +11,13 @@ PUT _ingest/pipeline/geoip
   ]
 }
 
+
 PUT _template/sparktemplate_1
 {
   "index_patterns": ["spark*"],
   "settings": {
-    "number_of_shards": 1
+    "number_of_shards": 1,
+    "number_of_replicas" : 0
   },
     "mappings": {
     "docs": {
@@ -43,6 +45,7 @@ PUT _template/sparktemplate_1
     }
   }
 }
+
 
 
 ## individual mapping for spark index.
