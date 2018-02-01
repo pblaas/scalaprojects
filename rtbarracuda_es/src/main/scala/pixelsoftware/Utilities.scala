@@ -62,7 +62,7 @@ object Utilities {
     val filterreason = "(\\d{1,})"
 
     val regex2 =
-      s"$month $day $time $device  $chain\\: $fqdn$clientip $messageid $bytesin $bytesout $action $sender $receiver $filteraction $filterreason $ip"
+      s"$month\\s+$day $time $device  $chain\\: $fqdn$clientip $messageid $bytesin $bytesout $action $sender $receiver $filteraction $filterreason $ip"
     Pattern.compile(regex2)
   }
 

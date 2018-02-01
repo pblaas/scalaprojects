@@ -42,7 +42,7 @@ object Stream {
     val pattern = barracudaLogPattern()
 
     // The only difference from the push example is that we use createPollingStream instead of createStream.
-    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxxx.xxxxx.nl", 9988)
+    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxxx.xxxx.nl", 9988)
 
     // This creates a DStream of SparkFlumeEvent objects. We need to extract the actual messages.
     // This assumes they are just strings, like lines in a log file.
@@ -94,6 +94,7 @@ object Stream {
       val requestsDataFrame = rdd.map(w => Record(w._1, w._2, w._3, w._4, w._5, w._6, w._7, w._8, w._9, w._10, w._11, w._12, w._13, w._14, w._15, w._16)).toDF()
       val requestsDataFramecount = requestsDataFrame.count()
       println(requestsDataFramecount)
+      //requestsDataFrame.show(5)
       val cleandf = requestsDataFrame.na.drop()
       // Create a SQL table from this DataFrame
       cleandf.createOrReplaceTempView("requests")
@@ -107,7 +108,7 @@ object Stream {
       val dfwithtime = df.withColumn("created", lit(System.currentTimeMillis()))
       val sparkIndex = s"spark-${{ java.time.LocalDate.now }}/docs"
       dfwithtime.write.format("org.elasticsearch.spark.sql").mode("append").save(sparkIndex)
-      dfwithtime.show(15)
+      dfwithtime.show(5)
     })
 
     // Kick it off
