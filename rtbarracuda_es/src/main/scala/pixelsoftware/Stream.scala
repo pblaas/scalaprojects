@@ -29,7 +29,7 @@ object Stream {
     val conf = new SparkConf().setAppName("BarracudaStream").set("spark.sql.warehouse.dir", "/tmp").set("spark.cores.max", "4")
     //conf.set("master", "local")
     conf.set("es.index.auto.create", "true")
-    conf.set("es.nodes", "elasticsearch.elkspark.svc.cluster.local:9200")
+    conf.set("es.nodes", "elasticsearch-client.elktest.svc.cluster.local:9200")
     conf.set("es.nodes.wan.only", "false")
     conf.set("es.mapping.date.rich", "true")
     conf.set("es.ingest.pipeline", "geoip")
@@ -42,7 +42,7 @@ object Stream {
     val pattern = barracudaLogPattern()
 
     // The only difference from the push example is that we use createPollingStream instead of createStream.
-    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxxx.xxxx.nl", 9988)
+    val flumeStream = FlumeUtils.createPollingStream(ssc, "xxx.xxx.nl", 9988)
 
     // This creates a DStream of SparkFlumeEvent objects. We need to extract the actual messages.
     // This assumes they are just strings, like lines in a log file.
