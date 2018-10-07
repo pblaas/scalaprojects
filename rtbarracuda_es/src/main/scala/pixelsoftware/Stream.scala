@@ -29,7 +29,7 @@ object Stream {
     val conf = new SparkConf().setAppName("BarracudaStream").set("spark.sql.warehouse.dir", "/tmp").set("spark.cores.max", "4")
     //conf.set("master", "local")
     conf.set("es.index.auto.create", "true")
-    conf.set("es.nodes", "elasticsearch-client.elktest.svc.cluster.local:9200")
+    conf.set("es.nodes", "elasticsearch-client.elkstack.svc.cluster.local:9200")
     conf.set("es.nodes.wan.only", "false")
     conf.set("es.mapping.date.rich", "true")
     conf.set("es.ingest.pipeline", "geoip")
@@ -39,7 +39,7 @@ object Stream {
     setupLogging()
 
     // Construct a regular expression (regex) to extract fields from raw Apache log lines
-    val pattern = barracudaLogPattern()
+    val pattern = spamexpertsLogPattern()
 
     // The only difference from the push example is that we use createPollingStream instead of createStream.
     val flumeStream = FlumeUtils.createPollingStream(ssc, "xxx.xxx.nl", 9988)
@@ -58,21 +58,24 @@ object Stream {
         val day = matcher.group(2).toInt
         val time = matcher.group(3)
         val device = matcher.group(4)
-        val chain = matcher.group(5)
-        val fqdn = matcher.group(6)
-        val clientip = matcher.group(8)
-        val messageid = matcher.group(9)
-        val bytesin = matcher.group(10).toInt
-        val bytesout = matcher.group(11).toInt
-        val action = matcher.group(12)
-        val sender = matcher.group(13)
-        val receiver = matcher.group(14)
-        val filteraction = matcher.group(15).toInt
-        val filterreason = matcher.group(16).toInt
-        val ip = matcher.group(17)
-        (month, day, time, device, chain, fqdn, clientip, messageid, bytesin, bytesout, action, sender, receiver, filteraction, filterreason, ip)
+        val source = matcher.group(5)
+        val messageid = matcher.group(6)
+        val devicefqdn = matcher.group(7)
+        val senderemail = matcher.group(8)
+        val receiveruser = matcher.group(9)
+        val receiverdomain = matcher.group(10)
+        val timestamp = matcher.group(11)
+        val senderhost = matcher.group(12)
+        val senderhelo = matcher.group(13)
+        val senderip = matcher.group(14)
+        val bytesin = matcher.group(15).toInt
+        val bytesout = matcher.group(16).toInt
+        val status = matcher.group(17)
+        val classification = matcher.group(18)
+        val greedy = matcher.group(19)
+        (month, day, time, device, source, messageid, devicefqdn, senderemail, receiveruser, receiverdomain, timestamp, senderhost, senderhelo, senderip, bytesin, bytesout, status, classification, greedy)
       } else {
-        (null, 0, null, null, null, null, null, null, 0, 0, null, null, null, 0, 0, null)
+        (null, 0, null, null, null, null, null, null, null, null, null, null, null, null, 0, 0, null, null, null)
       }
     })
     //.window(Seconds(300))
@@ -91,20 +94,20 @@ object Stream {
       // We created the Record case class for this purpose.
       // So we'll convert each RDD of tuple data into an RDD of "Record"
       // objects, which in turn we can convert to a DataFrame using toDF()
-      val requestsDataFrame = rdd.map(w => Record(w._1, w._2, w._3, w._4, w._5, w._6, w._7, w._8, w._9, w._10, w._11, w._12, w._13, w._14, w._15, w._16)).toDF()
+      val requestsDataFrame = rdd.map(w => Record(w._1, w._2, w._3, w._4, w._5, w._6, w._7, w._8, w._9, w._10, w._11, w._12, w._13, w._14, w._15, w._16, w._17, w._18, w._19)).toDF()
       val requestsDataFramecount = requestsDataFrame.count()
       println(requestsDataFramecount)
-      //requestsDataFrame.show(5)
+      requestsDataFrame.show(5)
       val cleandf = requestsDataFrame.na.drop()
       // Create a SQL table from this DataFrame
       cleandf.createOrReplaceTempView("requests")
 
       // But remember it's only querying the data in this RDD, from this batch.
       val wordCountsDataFrame =
-        sqlContext.sql("select month, day, time, device, clientip, sender, receiver from requests")
+        sqlContext.sql("select month, day, time, device, senderip, senderemail, receiverdomain from requests where classification='Rejected'")
 
       println(s"========= $time =========")
-      val df = wordCountsDataFrame.groupBy("clientip").count().sort($"count".desc)
+      val df = wordCountsDataFrame.groupBy("senderip").count().sort($"count".desc)
       val dfwithtime = df.withColumn("created", lit(System.currentTimeMillis()))
       val sparkIndex = s"spark-${{ java.time.LocalDate.now }}/docs"
       dfwithtime.write.format("org.elasticsearch.spark.sql").mode("append").save(sparkIndex)
@@ -119,8 +122,8 @@ object Stream {
 }
 
 /** Case class for converting RDD to DataFrame */
-case class Record(month: String, day: Int, time: String, device: String, chain: String, fqdn: String, clientip: String, messageid: String, bytesin: Int, bytesout: Int, action: String, sender: String, receiver: String, filteraction: Int, filterreason: Int, ip: String)
-
+//case class Record(month: String, day: Int, time: String, device: String, chain: String, fqdn: String, clientip: String, messageid: String, bytesin: Int, bytesout: Int, action: String, sender: String, receiver: String, filteraction: Int, filterreason: Int, ip: String)
+case class Record(month: String, day: Int, time: String, device: String, source: String, messageid: String, devicefqdn: String, senderemail: String, receiveruser: String, receiverdomain: String, timestamp: String, senderhost: String, senderhelo: String, senderip: String, bytesin: Int, bytesout: Int, status: String, classification: String, greedy: String)
 /**
  * Lazily instantiated singleton instance of SQLContext
  *  (Straight from included examples in Spark)

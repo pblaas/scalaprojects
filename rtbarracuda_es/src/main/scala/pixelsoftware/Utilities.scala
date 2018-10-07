@@ -41,7 +41,7 @@ object Utilities {
       s"$ip $client $user $dateTime $request $status $bytes $referer $agent"
     Pattern.compile(regex)
   }
-
+  /** regexp for barracudaLogs */
   def barracudaLogPattern(): Pattern = {
     val ddd = "\\d{1,3}"
     val month = "(\\S+)"
@@ -64,6 +64,42 @@ object Utilities {
     val regex2 =
       s"$month\\s+$day $time $device  $chain\\: $fqdn$clientip $messageid $bytesin $bytesout $action $sender $receiver $filteraction $filterreason $ip"
     Pattern.compile(regex2)
+  }
+
+  /*Regexp for Spamexpert logs */
+  def spamexpertsLogPattern(): Pattern = {
+    val ddd = "\\d{1,3}"
+    val month = "(\\S+)"
+    val day = "(\\d{1,})"
+    val time = "(\\d{2}:\\d{2}:\\d{2})"
+    val device = "(\\S+)"
+    val devicefqdn = "(\\w+.\\w+.\\w+)"
+    val chain = "(\\S+)"
+    val fqdn = "(\\S+)"
+    val messageid = "(\\w+\\-\\w+\\-\\w+)"
+    val ip = s"($ddd\\.$ddd\\.$ddd\\.$ddd)?"
+    val clientip = s"(\\[$ip\\])"
+    val bytesin = "(\\d{1,})"
+    val bytesout = "(\\d{1,})"
+    val action = "(\\S+)"
+    val user = "(\\S+)"
+    val sender = "(\\S+)"
+    val receiver = "(\\S+)"
+    val filteraction = "(\\d{1,})"
+    val filterreason = "(\\d{1,})"
+    val mailadres = "(\\S+@\\S+)"
+    val domainorip = "(\\[\\d{1,}.\\d{1,}.\\d{1,}.\\d{1,}\\]|\\S+)"
+    val domain = "(\\S+|)"
+    val timestamp = "(\\d{4}-\\d{1,}-\\d{1,}T\\d{1,}:\\d{1,}:\\d{1,})"
+    val status = "(\\S+)"
+    val classification = "(\\S+)"
+    val source = "(\\S+)"
+    val greedy = "(.*)"
+
+    val regex3 =
+      s"""$month\\s+$day $time $device $source: DEBUG \"$messageid\",\"$devicefqdn\",\"$mailadres\",\"$user\",\"$domain\",\"$timestamp\",\"$domain\",\"$domainorip\",\"$ip\",\"$bytesin\",\"$bytesin\",\"$status\",\"$classification\",$greedy"""
+    Pattern.compile(regex3)
+
   }
 
 }
