@@ -5,7 +5,7 @@ PUT _ingest/pipeline/geoip
   "processors": [
     {
       "geoip": {
-        "field": "clientip"
+        "field": "senderip"
       }
     }
   ]
@@ -16,13 +16,13 @@ PUT _template/sparktemplate_1
 {
   "index_patterns": ["spark*"],
   "settings": {
-    "number_of_shards": 1,
-    "number_of_replicas" : 0
+    "number_of_shards": 5,
+    "number_of_replicas" : 1
   },
     "mappings": {
     "docs": {
     "properties": {
-      "clientip": {
+      "senderip": {
         "type": "ip"
       },
       "count": {
@@ -86,7 +86,7 @@ PUT _ingest/pipeline/geoip
   "processors" : [
     {
       "geoip" : {
-        "field" : "clientip",
+        "field" : "senderip",
         "target_field" : "geo",
         "database_file" : "GeoLite2-Country.mmdb.gz"
       }
