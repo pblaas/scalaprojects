@@ -73,7 +73,7 @@ object Utilities {
     val day = "(\\d{1,})"
     val time = "(\\d{2}:\\d{2}:\\d{2})"
     val device = "(\\S+)"
-    val devicefqdn = "(\\w+.\\w+.\\w+)"
+    val devicefqdn = "(\\S+|)"
     val chain = "(\\S+)"
     val fqdn = "(\\S+)"
     val messageid = "(\\w+\\-\\w+\\-\\w+)"
@@ -90,16 +90,18 @@ object Utilities {
     val mailadres = "(\\S+@\\S+)"
     val domainorip = "(\\[\\d{1,}.\\d{1,}.\\d{1,}.\\d{1,}\\]|\\S+)"
     val domain = "(\\S+|)"
-    val timestamp = "(\\d{4}-\\d{1,}-\\d{1,}T\\d{1,}:\\d{1,}:\\d{1,})"
-    val status = "(\\S+)"
-    val classification = "(\\S+)"
+    val timestamp = "(\\d{4}-\\d{1,}-\\d{1,} \\d{1,}:\\d{1,}:\\d{1,})"
+    val status = "(\\w+)"
+    val classification = "(\\S+|)"
     val source = "(\\S+)"
     val greedy = "(.*)"
 
     val regex3 =
-      s"""$month\\s+$day $time $device $source: DEBUG \"$messageid\",\"$devicefqdn\",\"$mailadres\",\"$user\",\"$domain\",\"$timestamp\",\"$domain\",\"$domainorip\",\"$ip\",\"$bytesin\",\"$bytesin\",\"$status\",\"$classification\",$greedy"""
+      s"""$month\\s+$day $time $device $source: DEBUG \"$messageid\",\"$devicefqdn\",\"$mailadres\",\"$user\",\"$domain\",\"$timestamp\",\"$domain\",\"$domainorip\",\"$ip\",\"$bytesin\",\"$bytesin\",\"$status\",$greedy"""
     Pattern.compile(regex3)
 
   }
 
 }
+//regex101.com
+//(\S+)\s+(\d{1,}) (\d{2}:\d{2}:\d{2}) (\S+) (\S+): DEBUG \"(\w+\-\w+\-\w+)\",\"(\S+|)\",\"(\S+@\S+)\",\"(\S+)\",\"(\S+|)\",\"(\d{4}-\d{1,}-\d{1,} \d{1,}:\d{1,}:\d{1,})\",\"(\S+|)\",\"(\[\d{1,}.\d{1,}.\d{1,}.\d{1,}\]|\S+)\",\"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\",\"(\d{1,})\",\"(\d{1,})\",\"(\w+)\",(.*)

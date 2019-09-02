@@ -71,11 +71,11 @@ object Stream {
         val bytesin = matcher.group(15).toInt
         val bytesout = matcher.group(16).toInt
         val status = matcher.group(17)
-        val classification = matcher.group(18)
-        val greedy = matcher.group(19)
-        (month, day, time, device, source, messageid, devicefqdn, senderemail, receiveruser, receiverdomain, timestamp, senderhost, senderhelo, senderip, bytesin, bytesout, status, classification, greedy)
+        val greedy = matcher.group(18)
+        //val classification = matcher.group(18)
+        (month, day, time, device, source, messageid, devicefqdn, senderemail, receiveruser, receiverdomain, timestamp, senderhost, senderhelo, senderip, bytesin, bytesout, status, greedy)
       } else {
-        (null, 0, null, null, null, null, null, null, null, null, null, null, null, null, 0, 0, null, null, null)
+        (null, 0, null, null, null, null, null, null, null, null, null, null, null, null, 0, 0, null, null)
       }
     })
     //.window(Seconds(300))
@@ -94,7 +94,7 @@ object Stream {
       // We created the Record case class for this purpose.
       // So we'll convert each RDD of tuple data into an RDD of "Record"
       // objects, which in turn we can convert to a DataFrame using toDF()
-      val requestsDataFrame = rdd.map(w => Record(w._1, w._2, w._3, w._4, w._5, w._6, w._7, w._8, w._9, w._10, w._11, w._12, w._13, w._14, w._15, w._16, w._17, w._18, w._19)).toDF()
+      val requestsDataFrame = rdd.map(w => Record(w._1, w._2, w._3, w._4, w._5, w._6, w._7, w._8, w._9, w._10, w._11, w._12, w._13, w._14, w._15, w._16, w._17, w._18)).toDF()
       val requestsDataFramecount = requestsDataFrame.count()
       println(requestsDataFramecount)
       requestsDataFrame.show(5)
@@ -104,7 +104,7 @@ object Stream {
 
       // But remember it's only querying the data in this RDD, from this batch.
       val wordCountsDataFrame =
-        sqlContext.sql("select month, day, time, device, senderip, senderemail, receiverdomain from requests where classification='Rejected'")
+        sqlContext.sql("select month, day, time, device, senderip, senderemail, receiverdomain from requests where status='rejected'")
 
       println(s"========= $time =========")
       val df = wordCountsDataFrame.groupBy("senderip").count().sort($"count".desc)
@@ -123,7 +123,7 @@ object Stream {
 
 /** Case class for converting RDD to DataFrame */
 //case class Record(month: String, day: Int, time: String, device: String, chain: String, fqdn: String, clientip: String, messageid: String, bytesin: Int, bytesout: Int, action: String, sender: String, receiver: String, filteraction: Int, filterreason: Int, ip: String)
-case class Record(month: String, day: Int, time: String, device: String, source: String, messageid: String, devicefqdn: String, senderemail: String, receiveruser: String, receiverdomain: String, timestamp: String, senderhost: String, senderhelo: String, senderip: String, bytesin: Int, bytesout: Int, status: String, classification: String, greedy: String)
+case class Record(month: String, day: Int, time: String, device: String, source: String, messageid: String, devicefqdn: String, senderemail: String, receiveruser: String, receiverdomain: String, timestamp: String, senderhost: String, senderhelo: String, senderip: String, bytesin: Int, bytesout: Int, status: String, greedy: String)
 /**
  * Lazily instantiated singleton instance of SQLContext
  *  (Straight from included examples in Spark)
